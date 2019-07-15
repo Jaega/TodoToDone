@@ -12,6 +12,7 @@ class TodoListViewController: UIViewController, UITableViewDelegate, UITableView
     
     var todoArray = ["Buy eggs", "Chat", "Take courses"]
     var todoListTableView: UITableView!
+    let defaults = UserDefaults.standard
     
     override func loadView() {
         super.loadView()
@@ -33,6 +34,11 @@ class TodoListViewController: UIViewController, UITableViewDelegate, UITableView
         todoListTableView.delegate = self
         todoListTableView.dataSource = self
         todoListTableView.register(UINib(nibName: "TodoCell", bundle: nil), forCellReuseIdentifier: "customTodoCell")
+        
+        if let itemArray = defaults.array(forKey: "TodoListArray") as? [String] {
+            todoArray = itemArray
+            todoListTableView.reloadData()
+        }
     }
     
     // MARK: - TableView Data Source Methods
@@ -71,6 +77,8 @@ class TodoListViewController: UIViewController, UITableViewDelegate, UITableView
             newItemName = alert.textFields![0].text!
             self.todoArray.append(newItemName)
             self.todoListTableView.reloadData()
+            
+            self.defaults.set(self.todoArray, forKey: "TodoListArray")
         }
         
         alert.addTextField { alertTextField in
