@@ -8,20 +8,24 @@
 
 /* Begin PBXBuildFile section */
 		0DA9417222DB462300C9F38C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA9417122DB462300C9F38C /* AppDelegate.swift */; };
-		0DA9417422DB462300C9F38C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA9417322DB462300C9F38C /* ViewController.swift */; };
+		0DA9417422DB462300C9F38C /* TodoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA9417322DB462300C9F38C /* TodoListViewController.swift */; };
 		0DA9417722DB462300C9F38C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0DA9417522DB462300C9F38C /* Main.storyboard */; };
 		0DA9417922DB462500C9F38C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0DA9417822DB462500C9F38C /* Assets.xcassets */; };
 		0DA9417C22DB462500C9F38C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0DA9417A22DB462500C9F38C /* LaunchScreen.storyboard */; };
+		0DA9418822DB494300C9F38C /* TodoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA9418622DB494300C9F38C /* TodoCell.swift */; };
+		0DA9418922DB494300C9F38C /* TodoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0DA9418722DB494300C9F38C /* TodoCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0DA9416E22DB462300C9F38C /* TodoToDone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TodoToDone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0DA9417122DB462300C9F38C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		0DA9417322DB462300C9F38C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		0DA9417322DB462300C9F38C /* TodoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListViewController.swift; sourceTree = "<group>"; };
 		0DA9417622DB462300C9F38C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0DA9417822DB462500C9F38C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0DA9417B22DB462500C9F38C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0DA9417D22DB462500C9F38C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0DA9418622DB494300C9F38C /* TodoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoCell.swift; sourceTree = "<group>"; };
+		0DA9418722DB494300C9F38C /* TodoCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TodoCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,14 +58,40 @@
 		0DA9417022DB462300C9F38C /* TodoToDone */ = {
 			isa = PBXGroup;
 			children = (
-				0DA9417122DB462300C9F38C /* AppDelegate.swift */,
-				0DA9417322DB462300C9F38C /* ViewController.swift */,
-				0DA9417522DB462300C9F38C /* Main.storyboard */,
-				0DA9417822DB462500C9F38C /* Assets.xcassets */,
-				0DA9417A22DB462500C9F38C /* LaunchScreen.storyboard */,
-				0DA9417D22DB462500C9F38C /* Info.plist */,
+				0DA9418422DB487200C9F38C /* Controller */,
+				0DA9418322DB486000C9F38C /* View */,
+				0DA9418522DB488F00C9F38C /* Supporting Files */,
 			);
 			path = TodoToDone;
+			sourceTree = "<group>";
+		};
+		0DA9418322DB486000C9F38C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				0DA9417A22DB462500C9F38C /* LaunchScreen.storyboard */,
+				0DA9417522DB462300C9F38C /* Main.storyboard */,
+				0DA9418622DB494300C9F38C /* TodoCell.swift */,
+				0DA9418722DB494300C9F38C /* TodoCell.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		0DA9418422DB487200C9F38C /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				0DA9417122DB462300C9F38C /* AppDelegate.swift */,
+				0DA9417322DB462300C9F38C /* TodoListViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		0DA9418522DB488F00C9F38C /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				0DA9417822DB462500C9F38C /* Assets.xcassets */,
+				0DA9417D22DB462500C9F38C /* Info.plist */,
+			);
+			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -125,6 +155,7 @@
 				0DA9417C22DB462500C9F38C /* LaunchScreen.storyboard in Resources */,
 				0DA9417922DB462500C9F38C /* Assets.xcassets in Resources */,
 				0DA9417722DB462300C9F38C /* Main.storyboard in Resources */,
+				0DA9418922DB494300C9F38C /* TodoCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -135,7 +166,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0DA9417422DB462300C9F38C /* ViewController.swift in Sources */,
+				0DA9417422DB462300C9F38C /* TodoListViewController.swift in Sources */,
+				0DA9418822DB494300C9F38C /* TodoCell.swift in Sources */,
 				0DA9417222DB462300C9F38C /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -283,7 +315,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = TodoToDone/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/TodoToDone/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -300,7 +332,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = TodoToDone/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/TodoToDone/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
