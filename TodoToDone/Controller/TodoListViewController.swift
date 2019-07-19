@@ -12,6 +12,7 @@ import CoreData
 class TodoListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var todoArray = [TodoItem]()
+    var selectedCategory: Category?
     var todoListTableView: UITableView!
     var searchBarView: UISearchBar!
     
@@ -54,7 +55,7 @@ class TodoListViewController: UIViewController, UITableViewDelegate, UITableView
         
         searchBarView.delegate = self
 
-        loadTodoItem()
+        loadTodoItems()
     }
     
     // MARK: - TableView Data Source Methods
@@ -66,7 +67,7 @@ class TodoListViewController: UIViewController, UITableViewDelegate, UITableView
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "customTodoCell", for: indexPath) as! TodoCell
         let item = todoArray[indexPath.row]
-        cell.TodoItemLabel.text = item.title
+        cell.todoItemLabel.text = item.title
         cell.accessoryType = item.checked ? .checkmark : .none
         return cell
     }
@@ -78,7 +79,7 @@ class TodoListViewController: UIViewController, UITableViewDelegate, UITableView
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         todoArray[indexPath.row].checked = !todoArray[indexPath.row].checked
-        saveTodoItem()
+        saveTodoItems()
         tableView.deselectRow(at: indexPath, animated: true)
     }
 
@@ -87,13 +88,14 @@ class TodoListViewController: UIViewController, UITableViewDelegate, UITableView
     @IBAction func onAddButtonPressed(_ sender: UIBarButtonItem) {
         var textField = UITextField()
         let alert = UIAlertController(title: "Add New Todo", message: "", preferredStyle: .alert)
-        let action = UIAlertAction(title: "Add new item", style: .default) { action in
+        let action = UIAlertAction(title: "Add", style: .default) { action in
             // action when user press the add button
             let newItem = TodoItem(context: self.context)
             newItem.title = textField.text!
             newItem.checked = false
+            newItem.parentCategory = self.selectedCategory
             self.todoArray.append(newItem)
-            self.saveTodoItem()
+            self.saveTodoItems()
             
         }
         alert.addTextField { alertTextField in
@@ -108,7 +110,7 @@ class TodoListViewController: UIViewController, UITableViewDelegate, UITableView
     
     
     // MARK: - Model manipulation methods
-    func saveTodoItem() {
+    func saveTodoItems() {
         do {
             try context.save()
         } catch {
@@ -117,7 +119,16 @@ class TodoListViewController: UIViewController, UITableViewDelegate, UITableView
         self.todoListTableView.reloadData()
     }
     
-    func loadTodoItem(with request: NSFetchRequest<TodoItem> = TodoItem.fetchRequest()) {
+    func loadTodoItems(with request: NSFetchRequest<TodoItem> = TodoItem.fetchRequest()) {
+        let categoryPredicate = NSPredicate(format: "parentCategory.title MATCHES %@", selectedCategory!.title!)
+        
+        if let paramPredicate = request.predicate {
+            let compoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [paramPredicate, categoryPredicate])
+            request.predicate = compoundPredicate
+        } else {
+            request.predicate = categoryPredicate
+        }
+        
         do {
             todoArray = try context.fetch(request)
         } catch  {
@@ -140,12 +151,12 @@ extension TodoListViewController: UISearchBarDelegate {
         let sortDescriptor = NSSortDescriptor(key: "title", ascending: true)
         request.sortDescriptors = [sortDescriptor]
         
-        loadTodoItem(with: request)
+        loadTodoItems(with: request)
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.count == 0 {
-            loadTodoItem()
+            loadTodoItems()
             
             DispatchQueue.main.async {
                 searchBar.resignFirstResponder()

@@ -1,20 +1,19 @@
 //
-//  TodoCell.swift
+//  CategoryCell.swift
 //  TodoToDone
 //
-//  Created by Xinzhao Li on 7/14/19.
+//  Created by Xinzhao Li on 7/18/19.
 //  Copyright © 2019 Jaega. All rights reserved.
 //
 
 import UIKit
 
-class TodoCell: UITableViewCell {
+class CategoryCell: UITableViewCell {
 
-    @IBOutlet weak var todoItemLabel: UILabel!
+    @IBOutlet weak var categoryLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

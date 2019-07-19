@@ -31,7 +31,32 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1190" y="-533"/>
+            <point key="canvasLocation" x="1999" y="-560"/>
+        </scene>
+        <!--Category View Controller-->
+        <scene sceneID="emd-bs-99a">
+            <objects>
+                <viewController id="YhC-1a-U5b" customClass="CategoryViewController" customModule="TodoToDone" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5Zj-3T-WPa">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="Kgu-Zt-gQf"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="gPd-Si-UbF">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="vgn-LJ-bj5">
+                            <connections>
+                                <action selector="onAddButtonPressed:" destination="YhC-1a-U5b" id="c7S-Fn-JeB"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="todoListVC" id="X9F-cE-e6P"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oO9-Zp-WO1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1187" y="-560"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="VPh-k2-Vgn">
@@ -45,7 +70,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="GS4-eo-6ZZ"/>
+                        <segue destination="YhC-1a-U5b" kind="relationship" relationship="rootViewController" id="xzz-sg-LIW"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IDr-GY-rN9" userLabel="First Responder" sceneMemberID="firstResponder"/>
