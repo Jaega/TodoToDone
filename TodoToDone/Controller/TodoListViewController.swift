@@ -8,6 +8,7 @@
 
 import UIKit
 import RealmSwift
+import SwipeCellKit
 
 class TodoListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     let realm = try! Realm()
@@ -64,6 +65,7 @@ class TodoListViewController: UIViewController, UITableViewDelegate, UITableView
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "customTodoCell", for: indexPath) as! TodoCell
+        cell.delegate = self
         if let item = todoItems?[indexPath.row] {
             cell.todoItemLabel.text = item.title
             cell.accessoryType = item.checked ? .checkmark : .none
@@ -155,3 +157,31 @@ extension TodoListViewController: UISearchBarDelegate {
     }
 }
 
+extension TodoListViewController: SwipeTableViewCellDelegate {
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
+        guard orientation == .right else { return nil }
+        
+        let deleteAction = SwipeAction(style: .destructive, title: "Delete") { action, indexPath in
+            if let item = self.todoItems?[indexPath.row] {
+                do {
+                    try self.realm.write {
+                        self.realm.delete(item)
+                    }
+                } catch {
+                    print("Error Deleting object: \(error)")
+                }
+            }
+            
+        }
+        
+        deleteAction.image = UIImage(named: "delete-icon")
+        
+        return [deleteAction]
+    }
+    
+    func tableView(_ tableView: UITableView, editActionsOptionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeOptions {
+        var options = SwipeOptions()
+        options.expansionStyle = .destructive
+        return options
+    }
+}
