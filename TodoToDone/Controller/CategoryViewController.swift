@@ -9,6 +9,7 @@
 import UIKit
 import RealmSwift
 import SwipeCellKit
+import ChameleonFramework
 
 class CategoryViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     let realm = try! Realm()
@@ -33,6 +34,7 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
         categoryTableView.delegate = self
         categoryTableView.dataSource = self
         categoryTableView.register(UINib(nibName: "CategoryCell", bundle: nil), forCellReuseIdentifier: "customCategoryCell")
+        categoryTableView.separatorStyle = .none
         loadCategories()
 
     }
@@ -45,8 +47,12 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "customCategoryCell", for: indexPath) as! CategoryCell
+        let category = categories?[indexPath.row]
         cell.delegate = self
-        cell.categoryLabel.text = categories?[indexPath.row].title ?? "No category available"
+        cell.categoryLabel.text = category?.title ?? "No category available"
+        guard let cellColor = UIColor(hexString: category!.colorHex) else {fatalError()}
+        cell.backgroundColor = cellColor
+        cell.categoryLabel.textColor = ContrastColorOf(cellColor, returnFlat: true)
         return cell
     }
     
@@ -77,19 +83,26 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
     @IBAction func onAddButtonPressed(_ sender: UIBarButtonItem) {
         var textField = UITextField()
         let alert = UIAlertController(title: "Add New Category", message: "", preferredStyle: .alert)
-        let action = UIAlertAction(title: "Add", style: .default) { action in
+        let addAction = UIAlertAction(title: "Add", style: .default) { action in
             let newCategory = Category()
             newCategory.title = textField.text!
+            newCategory.colorHex = UIColor.randomFlat.hexValue()
             self.save(category: newCategory)
         }
         
-        alert.addAction(action)
+        let dismissAction = UIAlertAction(title: "Cancel", style: .default) { action in
+            
+        }
+        
+        alert.addAction(addAction)
+        alert.addAction(dismissAction)
         alert.addTextField { alertTextField in
             alertTextField.placeholder = "Create new category"
             textField = alertTextField
         }
         
         present(alert, animated: true, completion: nil)
+        
         
     }
     

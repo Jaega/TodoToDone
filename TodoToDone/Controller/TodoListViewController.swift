@@ -9,6 +9,7 @@
 import UIKit
 import RealmSwift
 import SwipeCellKit
+import ChameleonFramework
 
 class TodoListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     let realm = try! Realm()
@@ -16,6 +17,7 @@ class TodoListViewController: UIViewController, UITableViewDelegate, UITableView
     var selectedCategory: Category?
     var todoListTableView: UITableView!
     var searchBarView: UISearchBar!
+    
     
     override func loadView() {
         super.loadView()
@@ -48,13 +50,37 @@ class TodoListViewController: UIViewController, UITableViewDelegate, UITableView
         todoListTableView.delegate = self
         todoListTableView.dataSource = self
         todoListTableView.register(UINib(nibName: "TodoCell", bundle: nil), forCellReuseIdentifier: "customTodoCell")
+        todoListTableView.separatorStyle = .none
         
         searchBarView.delegate = self
         
         if selectedCategory != nil {
             loadTodoItems()
         }
+
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        guard let colorHexString = selectedCategory?.colorHex else {fatalError()}
+        updateNavBar(with: colorHexString)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        updateNavBar(with: "FFD950")
+    }
+    
+    // MARK: - Update Nav Bar
+    
+    func updateNavBar(with colorHexCode: String) {
+        guard let navBar = navigationController?.navigationBar else {fatalError("Nav controller not available")}
         
+        title = selectedCategory?.title
+        
+        guard let navBarColor = UIColor(hexString: colorHexCode) else {fatalError()}
+        navBar.barTintColor = navBarColor
+        navBar.tintColor = ContrastColorOf(navBarColor, returnFlat: true)
+        navBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: ContrastColorOf(navBarColor, returnFlat: true)]
+        searchBarView.barTintColor = navBarColor
     }
     
     // MARK: - TableView Data Source Methods
@@ -69,9 +95,16 @@ class TodoListViewController: UIViewController, UITableViewDelegate, UITableView
         if let item = todoItems?[indexPath.row] {
             cell.todoItemLabel.text = item.title
             cell.accessoryType = item.checked ? .checkmark : .none
+            if let color = UIColor(hexString: selectedCategory!.colorHex)?.darken(byPercentage: CGFloat(indexPath.row)/CGFloat(todoItems!.count)) {
+                cell.backgroundColor = color
+                cell.todoItemLabel.textColor = ContrastColorOf(color, returnFlat: true)
+            }
         } else {
             cell.todoItemLabel.text = "No items added"
         }
+        
+        
+        
         
         return cell
     }
@@ -100,7 +133,7 @@ class TodoListViewController: UIViewController, UITableViewDelegate, UITableView
     @IBAction func onAddButtonPressed(_ sender: UIBarButtonItem) {
         var textField = UITextField()
         let alert = UIAlertController(title: "Add New Todo", message: "", preferredStyle: .alert)
-        let action = UIAlertAction(title: "Add", style: .default) { action in
+        let addAction = UIAlertAction(title: "Add", style: .default) { action in
             // action when user press the add button
             if let parentCategory = self.selectedCategory {
                 do {
@@ -118,11 +151,15 @@ class TodoListViewController: UIViewController, UITableViewDelegate, UITableView
                 self.todoListTableView.reloadData()
             }
         }
+        let dismissAction = UIAlertAction(title: "Cancel", style: .default) { action in
+            
+        }
         alert.addTextField { alertTextField in
             alertTextField.placeholder = "Create new item"
             textField = alertTextField
         }
-        alert.addAction(action)
+        alert.addAction(addAction)
+        alert.addAction(dismissAction)
         present(alert, animated: true, completion: nil)
         
         

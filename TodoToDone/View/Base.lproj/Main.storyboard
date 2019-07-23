@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Todo List View Controller-->
+        <!--Items-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="TodoListViewController" customModule="TodoToDone" customModuleProvider="target" sceneMemberID="viewController">
@@ -20,9 +20,8 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" id="RCf-f5-t1j">
+                    <navigationItem key="navigationItem" title="Items" id="RCf-f5-t1j">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="GoZ-oJ-UDh">
-                            <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                             <connections>
                                 <action selector="onAddButtonPressed:" destination="BYZ-38-t0r" id="z1K-qX-C4W"/>
                             </connections>
@@ -33,7 +32,7 @@
             </objects>
             <point key="canvasLocation" x="1999" y="-560"/>
         </scene>
-        <!--Category View Controller-->
+        <!--TodoToDone-->
         <scene sceneID="emd-bs-99a">
             <objects>
                 <viewController id="YhC-1a-U5b" customClass="CategoryViewController" customModule="TodoToDone" customModuleProvider="target" sceneMemberID="viewController">
@@ -43,7 +42,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="Kgu-Zt-gQf"/>
                     </view>
-                    <navigationItem key="navigationItem" id="gPd-Si-UbF">
+                    <navigationItem key="navigationItem" title="TodoToDone" id="gPd-Si-UbF">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="vgn-LJ-bj5">
                             <connections>
                                 <action selector="onAddButtonPressed:" destination="YhC-1a-U5b" id="c7S-Fn-JeB"/>
@@ -63,10 +62,10 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="eqR-Hi-N2x" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Mqe-S8-cqp">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="Mqe-S8-cqp">
+                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" red="1" green="0.85061366500000002" blue="0.31558937510000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" red="1" green="0.85098039219999999" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
